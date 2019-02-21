@@ -10,7 +10,7 @@ service mysql start
 sleep 3
 echo `service mysql status`
 
-echo '2. execute grant.sql file....'
+echo '2. execute grants.sql file....'
 
 mysql < /mysql/grants.sql
 echo 'add grants'
