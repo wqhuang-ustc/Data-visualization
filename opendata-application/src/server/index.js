@@ -1,5 +1,6 @@
 const express = require('express');
 const os = require('os');
+var d3 = require("d3");
 
 const app = express();
 
