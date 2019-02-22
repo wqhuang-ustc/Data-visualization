@@ -14,33 +14,53 @@ class LineChart extends Component {
   
       //number formatter
       const xFormat = d3.format('.2')
+      //var dateFormatter = d3.time.format("%d-%m-%X");
+      // var parseDate = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
+      var parseDate =  d3.utcParse("%Y-%m-%dT%H:%M:%S.%LZ");
+
       
       //x scale
-      const x = d3.scaleLinear()
-        .domain(d3.extent(data, d => d.a)) //domain: [min,max] of a
-        .range([margin, w])
+      // const x = d3.scaleLinear()
+      //   .domain(d3.extent(data, d => d.index)) //domain: [min,max] of a
+      //   .range([margin, w])
+
+      const x = d3.scaleTime()
+            .domain(d3.extent(data, function(d){ 
+              console.log(d.date)
+              var date = parseDate(d.date); 
+              console.log(date,'this is date')
+              return date 
+            }))
+            .range([margin, w])
+
+
       
       //y scale
       const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.b)]) // domain [0,max] of b (start from 0)
+        .domain([0, d3.max(data, d => d.sensor4)]) // domain [0,max] of b (start from 0)
         .range([h, margin])
       
       //line generator: each point is [x(d.a), y(d.b)] where d is a row in data
       // and x, y are scales (e.g. x(10) returns pixel value of 10 scaled by x)
       const line = d3.line()
-        .x(d => x(d.a))
-        .y(d => y(d.b))
-        .curve(d3.curveCatmullRom.alpha(0.5)) //curve line
+        .x(function(d){
+          var date = parseDate(d.date);
+          return x(date)
+        })
+        .y(d => y(d.sensor4))
+        //.curve(d3.curveCatmullRom.alpha(0.5)) //curve line
        
       const xTicks = x.ticks(6).map(d => (
           x(d) > margin && x(d) < w ? 
             <g transform={`translate(${x(d)},${h + margin})`}>  
-              <text>{xFormat(d)}</text>
+              <text>{parseDate(d)}</text>
               <line x1='0' x1='0' y1='0' y2='5' transform="translate(0,-20)"/>
             </g>
           : null
       ))
-  
+
+
+      
       const yTicks = y.ticks(5).map(d => (
           y(d) > 10 && y(d) < h ? 
             <g transform={`translate(${margin},${y(d)})`}>  
