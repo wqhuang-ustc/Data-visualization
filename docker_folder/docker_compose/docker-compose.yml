@@ -15,7 +15,7 @@ services:
     image: kylinhuang/opendata:latest
     container_name: opendata
     ports:
-      - 8080:8080
+      - 8081:8081
       - 3000:3000
 
 
