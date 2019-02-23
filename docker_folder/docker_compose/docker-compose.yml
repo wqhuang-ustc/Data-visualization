@@ -17,8 +17,8 @@ services:
     ports:
       - 8081:8081
       - 3000:3000
-    volumes:
-      - data:/Eficode2019_task/opendata-application
+    # volumes:
+    #   - data:/Eficode2019_task/opendata-application
 
 
 volumes:
