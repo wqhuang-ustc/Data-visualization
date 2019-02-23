@@ -25,18 +25,17 @@ cron.schedule('* * * * *', () => {
     console.log('running a task every minute');
     console.log("schduler is on");
     request = https.get(options, function(res){
-        var body = "";
+        var response = "";
         var absolutePath = path.resolve(__dirname, pathToJsonfile);
         console.log(absolutePath);
     
         res.on('data', function(data){ 
-            body += data;
+            response += data;
         });
     
         res.on('end', function(){
-            console.log(body);
-            var element = JSON.parse(body);
-            
+            console.log(response);
+            var element = JSON.parse(response);
 
             //write response json to jsonfile
             fs.readFile(absolutePath, 'utf8', function(err,obj){
@@ -45,17 +44,21 @@ cron.schedule('* * * * *', () => {
                 fs.writeFile(absolutePath, JSON.stringify(array), 'utf8', function(err){
                     if (err) {
                         console.log(err);
-                        return;
+                        throw err;
                     }
                     console.log("The file is saved.");
                 });
+                if (err){
+                    console.log(err);
+                    throw err;
+                }
             });
 
 
         });
     
-        res.on('error', function(e){
-            console.log("Got error: " + e.message);
+        res.on('error', function(err){
+            console.log("Got error: " + err.message);
         });
     });
   });
