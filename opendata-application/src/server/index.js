@@ -8,7 +8,7 @@ const app = express();
 const https = require('https');
 var fs = require('fs');
 /*production path*/
-var pathToJsonfile = '/Eficode2019_task/opendata-application/src/client/opendata.json';
+var pathToJsonfile = 'opendata.json';
 /*development path*/
 //var pathToJsonfile = '/home/kylin/Eficode2019_task/opendata-application/src/client/opendata.json';
 
@@ -29,8 +29,8 @@ cron.schedule('* * * * *', () => {
     console.log("schduler is on");
     request = https.get(options, function(res){
         var response = "";
-        // var absolutePath = path.resolve(__dirname, pathToJsonfile);
-        // console.log(absolutePath);
+        var absolutePath = path.resolve(__dirname, pathToJsonfile);
+        console.log(absolutePath);
     
         res.on('data', function(data){ 
             response += data;
@@ -41,10 +41,10 @@ cron.schedule('* * * * *', () => {
             var element = JSON.parse(response);
 
             //write response json to jsonfile
-            fs.readFile(pathToJsonfile, 'utf8', function(err,obj){
+            fs.readFile(absolutePath, 'utf8', function(err,obj){
                 var array = JSON.parse(obj);
                 array.push(element);
-                fs.writeFile(pathToJsonfile, JSON.stringify(array), 'utf8', function(err){
+                fs.writeFile(absolutePath, JSON.stringify(array), 'utf8', function(err){
                     if (err) {
                         console.log(err);
                         throw err;
