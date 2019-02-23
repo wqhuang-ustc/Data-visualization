@@ -8,7 +8,7 @@ const app = express();
 const https = require('https');
 var fs = require('fs');
 /*production path*/
-var pathToJsonfile = 'opendata.json';
+var pathToJsonfile = '../../opendata.json';
 /*development path*/
 //var pathToJsonfile = '/home/kylin/Eficode2019_task/opendata-application/src/client/opendata.json';
 
@@ -27,6 +27,19 @@ var options = {
 cron.schedule('* * * * *', () => {
     console.log('running a task every minute');
     console.log("schduler is on");
+    var filename = 'opendata.json';
+    fs.open(filename,'r',function(err, fd){
+        if (err) {
+          fs.writeFile(filename, '[]', function(err) {
+              if(err) {
+                  console.log(err);
+              }
+              console.log("Create new opendata.json file!");
+          });
+        } else {
+          console.log("The file exists!");
+        }
+      });
     request = https.get(options, function(res){
         var response = "";
         var absolutePath = path.resolve(__dirname, pathToJsonfile);
