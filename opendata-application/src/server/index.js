@@ -27,6 +27,7 @@ var options = {
 cron.schedule('* * * * *', () => {
     console.log('running a task every minute');
     console.log("schduler is on");
+
     var filename = 'opendata.json';
     fs.open(filename,'r',function(err, fd){
         if (err) {
@@ -40,10 +41,11 @@ cron.schedule('* * * * *', () => {
           console.log("The file exists!");
         }
       });
+
     request = https.get(options, function(res){
         var response = "";
         var absolutePath = path.resolve(__dirname, pathToJsonfile);
-        console.log(absolutePath);
+        console.log("absolute path:" + absolutePath);
     
         res.on('data', function(data){ 
             response += data;
