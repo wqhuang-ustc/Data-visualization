@@ -89,7 +89,19 @@ app.get('/api/updateData', (req, res) => {
     var absolutePath = path.resolve(__dirname, pathToJsonfile);
     fs.readFile(absolutePath, 'utf8', function(err,obj){
         var response = JSON.parse(obj);
-        res.send(response);
+        //seprate 4 sensor data into 4 arrays
+        const allSensors = [];
+
+        for (let j = 1; j < Object.keys(response[0]).length; j += 1) {
+            const sensor = [];
+            for (let i = 0; i < response.length; i += 1) {
+            const name = Object.keys(response[0])[j];
+            sensor.push([response[i].date, response[i][name]]);
+            }
+            allSensors.push(sensor);
+        }
+
+        res.send(allSensors);
         if (err){
             console.log(err);
             throw err;
