@@ -6,36 +6,26 @@ import OpenData from '../../../opendata.json'
 ReactChartkick.addAdapter(Chart);
 
 //format opendata into react-chartkick date format
-const allSensor1 = [];
-const allSensor2 = [];
-const allSensor3 = [];
-const allSensor4 = [];
+const allSensors = [];
 
-for (let i = 0; i < OpenData.length; i += 1){
-    allSensor1.push([OpenData[i].date, OpenData[i].sensor1]);
-}
-
-for (let i = 0; i < OpenData.length; i += 1){
-    allSensor2.push([OpenData[i].date, OpenData[i].sensor2]);
-}
-
-for (let i = 0; i < OpenData.length; i += 1){
-    allSensor3.push([OpenData[i].date, OpenData[i].sensor3]);
-}
-
-for (let i = 0; i < OpenData.length; i += 1){
-    allSensor4.push([OpenData[i].date, OpenData[i].sensor4]);
-}
+for (let j = 1; j < Object.keys(OpenData[0]).length; j += 1) {
+    const sensor = [];
+    for (let i = 0; i < OpenData.length; i += 1) {
+      const name = Object.keys(OpenData[0])[j];
+      sensor.push([OpenData[i].date, OpenData[i][name]]);
+    }
+    allSensors.push(sensor);
+  }
 
 class LineCharts extends Component {
     constructor(props){
         super(props);
         this.state = {
             height: '145px',
-            DataSensor1: allSensor1,
-            DataSensor2: allSensor2,
-            DataSensor3: allSensor3,
-            DataSensor4: allSensor4
+            DataSensor1: allSensors[0],
+            DataSensor2: allSensors[1],
+            DataSensor3: allSensors[2],
+            DataSensor4: allSensors[3]
         };
     }
 
