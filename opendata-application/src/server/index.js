@@ -1,6 +1,5 @@
 const express = require('express');
 const os = require('os');
-var d3 = require("d3");
 var cron = require('node-cron');
 const path = require("path");
 const app = express();
@@ -9,6 +8,7 @@ const https = require('https');
 var fs = require('fs');
 /*production path*/
 var pathToJsonfile = '../../opendata.json';
+var array_json;
 /*development path*/
 //var pathToJsonfile = '/home/kylin/Eficode2019_task/opendata-application/src/client/opendata.json';
 
@@ -85,5 +85,18 @@ cron.schedule('1 * * * *', () => {
 
 app.use(express.static('dist'));
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
+app.get('/api/updateData', (req, res) => {
+    var absolutePath = path.resolve(__dirname, pathToJsonfile);
+    fs.readFile(absolutePath, 'utf8', function(err,obj){
+        var response = JSON.parse(obj);
+        res.send(response);
+        if (err){
+            console.log(err);
+            throw err;
+        }
+    });
+
+});
+
 
 app.listen(process.env.PORT || 8081, () => console.log(`Listening on port ${process.env.PORT || 8081}!`));
