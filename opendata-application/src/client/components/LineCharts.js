@@ -6,25 +6,25 @@ import OpenData from '../../../opendata.json'
 
 ReactChartkick.addAdapter(Chart);
 
-//format opendata into react-chartkick date format
+// format opendata into react-chartkick date format
 const allSensors = [];
 
 for (let j = 1; j < Object.keys(OpenData[0]).length; j += 1) {
-    const sensor = [];
-    for (let i = 0; i < OpenData.length; i += 1) {
-      const name = Object.keys(OpenData[0])[j];
-      sensor.push([OpenData[i].date, OpenData[i][name]]);
-    }
-    allSensors.push(sensor);
+  const sensor = [];
+  for (let i = 0; i < OpenData.length; i += 1) {
+    const name = Object.keys(OpenData[0])[j];
+    sensor.push([OpenData[i].date, OpenData[i][name]]);
   }
+  allSensors.push(sensor);
+}
 
 const daySensors = [];
 let dayAvailable = 1;
 if (OpenData.length > 23) {
-  for (let n = 2; n < Object.keys(OpenData[0]).length; n += 1) {
+  for (let j = 1; j < Object.keys(OpenData[0]).length; j += 1) {
     const sensor = [];
     for (let i = OpenData.length - 25; i < OpenData.length; i += 1) {
-      const name = Object.keys(OpenData[0])[n];
+      const name = Object.keys(OpenData[0])[j];
       sensor.push([OpenData[i].date, OpenData[i][name]]);
     }
     daySensors.push(sensor);
@@ -109,13 +109,13 @@ class LineCharts extends Component {
                         className= {this.state.all_active ? "button_active" : "button_inactive"}
                         onClick={this.handleClickerAll}
                     >
-                        <Button variant="contained" color="primary">All Time Retrieved</Button>
+                        <Button size="small" variant="contained" color="primary">All Time Retrieved</Button>
                     </span>
                     <span
                         className= {this.state.recent_active ? "button_active" : "button_inactive"}
                         onClick={this.handleClickRecent}
                     >
-                        <Button variant="contained" color="primary">Recent 24 Hours</Button>
+                        <Button size="small" variant="contained" color="primary">Recent 24 Hours</Button>
                     </span>
                 </div>
 

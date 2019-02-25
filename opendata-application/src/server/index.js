@@ -6,11 +6,9 @@ const app = express();
 
 const https = require('https');
 var fs = require('fs');
-/*production path*/
 var pathToJsonfile = '../../opendata.json';
-var array_json;
-/*development path*/
-//var pathToJsonfile = '/home/kylin/Eficode2019_task/opendata-application/src/client/opendata.json';
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://13.53.168.45:27017/";
 
 var options = {
     host: 'opendata.hopefully.works',
@@ -53,24 +51,17 @@ cron.schedule('1 * * * *', () => {
     
         res.on('end', function(){
             console.log(response);
-            var element = JSON.parse(response);
-
-            //write response json to jsonfile
-            fs.readFile(absolutePath, 'utf8', function(err,obj){
-                var array = JSON.parse(obj);
-                array.push(element);
-                fs.writeFile(absolutePath, JSON.stringify(array), 'utf8', function(err){
-                    if (err) {
-                        console.log(err);
-                        throw err;
-                    }
-                    console.log("The file is saved.");
+            //insert new data into mongodb
+            MongoClient.connect(url, function(err, db) {
+                if (err) throw err;
+                var dbo = db.db("efimongo");
+                var data = JSON.parse(response);
+                dbo.collection("opendata").insertOne(data, function(err, res) {
+                  if (err) throw err;
+                  console.log("1 document inserted");
+                  db.close();
                 });
-                if (err){
-                    console.log(err);
-                    throw err;
-                }
-            });
+              });
 
 
         });
@@ -78,6 +69,26 @@ cron.schedule('1 * * * *', () => {
         res.on('error', function(err){
             console.log("Got error: " + err.message);
         });
+
+        // retrieve all data from mongodb and update cache file (opendata.json)
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("efimongo");
+            dbo.collection("opendata").find({}, { projection: { _id: 0 } }).toArray(function(err, result) {
+              if (err) throw err;
+              // write result back to file cache(opendata.json)
+              console.log(result);
+
+              fs.writeFile("./opendata.json", JSON.stringify(result), 'utf8', function(err){
+                if (err) {
+                    console.log(err);
+                    throw err;
+                }
+                console.log("The file is saved.");
+            });
+              db.close();
+            });
+          });
     });
   });
 
