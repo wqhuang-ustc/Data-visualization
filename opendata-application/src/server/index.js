@@ -42,7 +42,7 @@ MongoClient.connect(url, function(err, db) {
     });
 
 
-cron.schedule('* * * * *', () => {
+cron.schedule('1 * * * *', () => {
     console.log('running a task every hour');
     console.log("schduler is on");
 
