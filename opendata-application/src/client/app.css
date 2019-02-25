@@ -1,10 +1,13 @@
 body {
   text-align: center;
-  margin: 0 10%;
 }
 
 .charts {
   margin: 0 10% 12px 10%;
+}
+
+.button {
+  margin-top: 12px;
 }
 
 span + span {
