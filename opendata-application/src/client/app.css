@@ -2,6 +2,12 @@ body {
   text-align: center;
 }
 
+.update_time {
+  position: relative;
+  top: -12px;
+  line-height: 0.3;
+}
+
 .charts {
   margin: 0 10% 12px 10%;
 }

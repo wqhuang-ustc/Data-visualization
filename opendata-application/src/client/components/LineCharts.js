@@ -34,7 +34,8 @@ class LineCharts extends Component {
             DataSensor1: res[0],
             DataSensor2: res[1],
             DataSensor3: res[2],
-            DataSensor4: res[3]
+            DataSensor4: res[3],
+            time: (new Date()).toISOString().split('.')[0].replace('T', '\xa0\xa0')
           }));
         console.log('Data init '.concat((new Date()).toISOString().split('.')[0].replace('T', ',')));
     
@@ -59,14 +60,16 @@ class LineCharts extends Component {
             DataSensor1: res[0],
             DataSensor2: res[1],
             DataSensor3: res[2],
-            DataSensor4: res[3]
+            DataSensor4: res[3],
+            time: (new Date()).toISOString().split('.')[0].replace('T', '\xa0\xa0')
           });
         } else {
           this.setState({
             DataSensor1: res[0].slice(Math.max(res[0].length - 24, 1)),
             DataSensor2: res[1].slice(Math.max(res[1].length - 24, 1)),
             DataSensor3: res[2].slice(Math.max(res[2].length - 24, 1)),
-            DataSensor4: res[3].slice(Math.max(res[3].length - 24, 1))
+            DataSensor4: res[3].slice(Math.max(res[3].length - 24, 1)),
+            time: (new Date()).toISOString().split('.')[0].replace('T', '\xa0\xa0')
           });
         }
       });
@@ -82,7 +85,8 @@ class LineCharts extends Component {
           DataSensor1: res[0],
           DataSensor2: res[1],
           DataSensor3: res[2],
-          DataSensor4: res[3]
+          DataSensor4: res[3],
+          time: (new Date()).toISOString().split('.')[0].replace('T', '\xa0\xa0')
         }));
     }
 
@@ -95,17 +99,19 @@ class LineCharts extends Component {
           DataSensor1: res[0].slice(Math.max(res[0].length - 24, 1)),
           DataSensor2: res[1].slice(Math.max(res[1].length - 24, 1)),
           DataSensor3: res[2].slice(Math.max(res[2].length - 24, 1)),
-          DataSensor4: res[3].slice(Math.max(res[3].length - 24, 1))
+          DataSensor4: res[3].slice(Math.max(res[3].length - 24, 1)),
+          time: (new Date()).toISOString().split('.')[0].replace('T', '\xa0\xa0')
         }));
       }
 
     render(){
-        const {height,DataSensor1, DataSensor2, DataSensor3, DataSensor4} = this.state;
+        const {height,DataSensor1, DataSensor2, DataSensor3, DataSensor4, time } = this.state;
 
         return (
             <div>
                 <div className="charts">
                     <h1>Data visualization of 4 sensors</h1>
+                    <p className="update_time">Data updated at {time}</p>
                     <LineChart
                     data={DataSensor1}
                     label="value"
