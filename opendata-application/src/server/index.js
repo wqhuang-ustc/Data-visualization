@@ -22,7 +22,7 @@ var options = {
 }
 
 
-cron.schedule('1 * * * *', () => {
+cron.schedule('* * * * *', () => {
     console.log('running a task every minute');
     console.log("schduler is on");
 
