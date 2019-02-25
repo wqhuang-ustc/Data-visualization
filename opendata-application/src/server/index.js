@@ -21,6 +21,26 @@ var options = {
 
 }
 
+// retrieve all data from mongodb and update cache file (opendata.json)
+MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("efimongo");
+    dbo.collection("opendata").find({}, { projection: { _id: 0 } }).toArray(function(err, result) {
+        if (err) throw err;
+        // write result back to file cache(opendata.json)
+        console.log(result);
+
+        fs.writeFile("./opendata.json", JSON.stringify(result), 'utf8', function(err){
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        console.log("The file is saved.");
+    });
+        db.close();
+    });
+    });
+
 
 cron.schedule('* * * * *', () => {
     console.log('running a task every minute');
@@ -91,6 +111,8 @@ cron.schedule('* * * * *', () => {
           });
     });
   });
+
+
 
 
 
