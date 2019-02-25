@@ -8,7 +8,7 @@ const https = require('https');
 var fs = require('fs');
 var pathToJsonfile = '../../opendata.json';
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://13.53.168.45:27017/";
+var url = "mongodb://13.53.130.192:27017/";
 
 var options = {
     host: 'opendata.hopefully.works',
