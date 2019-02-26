@@ -12,6 +12,10 @@ then go to `Eficode2019/docker_folder/docker_compose/` directory and run `docker
 
 ## Design of this opendata visualization solution
 
+![alt text][logo]
+
+[logo]: https://drive.google.com/file/d/1d0k9fZ-cQAoKn7FbOVNWnjYXXbWP8eVA/view?usp=sharing "Opendata BlockDiagram"
+
 ### Frontend 
 1. Frontend site will handle the display of data from 4 sensors in 4 separated line charts considering the fact that values of different sensors vary pretty much.
 2. /api/updateData is designed to retrieve all processed data from the backend.
