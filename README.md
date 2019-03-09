@@ -2,7 +2,7 @@
 
 ## Introduction
 This is a repo for Solution of [Eficode2019_task](https://github.com/eficode/opendata-task-2019). <br/>
-To visit website for the data visualization solution, visit [http://13.53.130.192:8081/](http://13.53.130.192:8081/). <br/>
+To visit website for the data visualization solution, visit [http://13.48.25.116:8081/](http://13.48.25.116:8081/). <br/>
 
 ## Prerequisites
 To run this solution in your machine, you need to install [docker CE](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker-compose](https://docs.docker.com/compose/install/). <br/>
