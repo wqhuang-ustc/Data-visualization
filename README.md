@@ -31,3 +31,15 @@ The opendata solution codes is packaged in a docker image (`Eficode2019_task/doc
 ### Jenkins job
 A jenkins job will be triggered by the webhook from github if a commit is pushed to this git repo in master branch. This jenkins job will build a new docker image with the latest code and redeploy the application in aws ec2 server. With this jenkins job, the process of development is more efficient.
 
+## Continuous integration and deployment
+To implement a full DevOps process, this solution is extended with more features as below:
+1. Separate the application into two part: frontend and backend micro-service.
+2. Bootstrap a kubernetes cluster and deploy the frontend and backend micro-services into the cluster.
+3. Build a jenkins cluster with a jenkins master to schedule the job and slave node to execute the jobs.4. Implement pipeline jobs(jenkinsfile) to produce docker image and publish to Dockerhub, trigger the deployment on k8s cluster with version control features, as well as a health check job to check the health of the micro-service.
+5. Setup a slack workspace to receive the build reports from jenkins.
+6. Setup datadog to monitor the host server and receive metrics of docker container and k8s cluster.
+
+This extended solution can be found in below repos with detailed description in README:
+1. https://github.com/wqhuang-ustc/Hello-world-deployment
+2. https://github.com/wqhuang-ustc/Hello-world-frontend
+3. https://github.com/wqhuang-ustc/Hello-world-backend
